@@ -65,6 +65,16 @@ EOF
 } >>~/spliit.creds
 msg_ok "Set up Database"
 
+# Test database connection
+msg_info "Testing database connection"
+PGPASSWORD=$DB_PASS psql -U $DB_USER -d $DB_NAME -h localhost -c '\q' &>/dev/null
+if [ $? -eq 0 ]; then
+  msg_ok "Database connection successful"
+else
+  msg_error "Database connection failed"
+  exit 1
+fi
+
 # Setup Spliit Application
 msg_info "Setting up Spliit"
 cd /opt
@@ -80,18 +90,17 @@ if [[ -z "$RELEASE" ]]; then
 fi
 echo "${RELEASE}" >/opt/spliit_version.txt
 
-# Create .env file
-cp .env.example .env
-
-# Update .env with database credentials BEFORE npm install
-sed -i "s|^DATABASE_URL=.*|DATABASE_URL=\"postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public\"|" .env
-
-# Generate random keys
+# Create .env file with all required variables
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
-sed -i "s|^NEXTAUTH_SECRET=.*|NEXTAUTH_SECRET=\"${NEXTAUTH_SECRET}\"|" .env
+cat <<EOF >/opt/spliit/.env
+DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public"
+NEXTAUTH_SECRET="${NEXTAUTH_SECRET}"
+NEXTAUTH_URL="http://localhost:3000"
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+NODE_ENV="production"
+EOF
 
-# Set production URL (will be updated with actual IP later)
-sed -i "s|^NEXT_PUBLIC_BASE_URL=.*|NEXT_PUBLIC_BASE_URL=\"http://localhost:3000\"|" .env
+msg_info "Database URL configured"
 
 # Install dependencies and build
 msg_info "Installing npm dependencies (this may take a while)..."
@@ -129,7 +138,7 @@ msg_ok "Created Service"
 
 # Update .env with actual container IP
 CONTAINER_IP=$(hostname -I | awk '{print $1}')
-sed -i "s|^NEXT_PUBLIC_BASE_URL=.*|NEXT_PUBLIC_BASE_URL=\"http://${CONTAINER_IP}:3000\"|" /opt/spliit/.env
+sed -i "s|http://localhost:3000|http://${CONTAINER_IP}:3000|g" /opt/spliit/.env
 
 # Add credentials info
 {
