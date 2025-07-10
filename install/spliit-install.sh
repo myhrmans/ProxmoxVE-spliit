@@ -94,11 +94,13 @@ sed -i "s|^NEXTAUTH_SECRET=.*|NEXTAUTH_SECRET=\"${NEXTAUTH_SECRET}\"|" .env
 sed -i "s|^NEXT_PUBLIC_BASE_URL=.*|NEXT_PUBLIC_BASE_URL=\"http://localhost:3000\"|" .env
 
 # Install dependencies and build
-export NODE_ENV=production
 msg_info "Installing npm dependencies (this may take a while)..."
-npm ci --only=production &>/dev/null
+cd /opt/spliit
+npm install
 msg_info "Building application..."
-npm run build &>/dev/null
+NODE_ENV=production npm run build
+msg_info "Pruning development dependencies..."
+npm prune --production
 msg_ok "Set up Spliit"
 
 # Creating Service
