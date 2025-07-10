@@ -92,8 +92,12 @@ echo "${RELEASE}" >/opt/spliit_version.txt
 
 # Create .env file with all required variables
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
+POSTGRES_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public"
+
 cat <<EOF >/opt/spliit/.env
-DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public"
+DATABASE_URL="${POSTGRES_URL}"
+POSTGRES_PRISMA_URL="${POSTGRES_URL}"
+POSTGRES_URL_NON_POOLING="${POSTGRES_URL}"
 NEXTAUTH_SECRET="${NEXTAUTH_SECRET}"
 NEXTAUTH_URL="http://localhost:3000"
 NEXT_PUBLIC_BASE_URL="http://localhost:3000"
