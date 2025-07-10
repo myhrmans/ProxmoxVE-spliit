@@ -39,8 +39,8 @@ DB_USER=spliit_user
 DB_PASS=$(openssl rand -base64 18 | tr -dc 'a-zA-Z0-9' | head -c13)
 
 # Start PostgreSQL
-systemctl start postgresql
-systemctl enable postgresql
+systemctl start postgresql &>/dev/null
+systemctl enable postgresql &>/dev/null
 
 # Create database and user
 sudo -u postgres psql <<EOF &>/dev/null
@@ -105,11 +105,11 @@ msg_info "Database URL configured"
 # Install dependencies and build
 msg_info "Installing npm dependencies (this may take a while)..."
 cd /opt/spliit
-$STD npm install
+npm install
 msg_info "Building application..."
-$STD NODE_ENV=production npm run build
+NODE_ENV=production npm run build
 msg_info "Pruning development dependencies..."
-$STD npm prune --production
+npm prune --production
 msg_ok "Set up Spliit"
 
 # Creating Service
