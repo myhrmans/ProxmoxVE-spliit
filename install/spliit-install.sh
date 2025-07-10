@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright (c) 2021-2025 community-scripts ORG
-# Author: [myhrmans]
+# Author: [YourUserName]
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/spliit-app/spliit
 
@@ -83,8 +83,8 @@ echo "${RELEASE}" >/opt/spliit_version.txt
 # Create .env file
 cp .env.example .env
 
-# Update .env with database credentials
-sed -i "s|^DATABASE_URL=.*|DATABASE_URL=\"postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}\"|" .env
+# Update .env with database credentials BEFORE npm install
+sed -i "s|^DATABASE_URL=.*|DATABASE_URL=\"postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public\"|" .env
 
 # Generate random keys
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
@@ -96,11 +96,11 @@ sed -i "s|^NEXT_PUBLIC_BASE_URL=.*|NEXT_PUBLIC_BASE_URL=\"http://localhost:3000\
 # Install dependencies and build
 msg_info "Installing npm dependencies (this may take a while)..."
 cd /opt/spliit
-npm install
+$STD npm install
 msg_info "Building application..."
-NODE_ENV=production npm run build
+$STD NODE_ENV=production npm run build
 msg_info "Pruning development dependencies..."
-npm prune --production
+$STD npm prune --production
 msg_ok "Set up Spliit"
 
 # Creating Service
