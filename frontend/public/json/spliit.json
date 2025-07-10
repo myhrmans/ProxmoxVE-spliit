@@ -2,7 +2,7 @@
   "name": "Spliit",
   "slug": "spliit",
   "categories": ["Finance", "Tools"],
-  "date_created": "2025-07-09",
+  "date_created": "2025-01-01",
   "type": "ct",
   "updateable": true,
   "privileged": false,
@@ -17,8 +17,8 @@
       "script": "ct/spliit.sh",
       "resources": {
         "cpu": 2,
-        "ram": 2048,
-        "hdd": 8,
+        "ram": 3072,
+        "hdd": 10,
         "os": "debian",
         "version": "12"
       }

@@ -8,9 +8,9 @@ source <(curl -s https://raw.githubusercontent.com/myhrmans/ProxmoxVE-spliit/dev
 # App Default Values
 APP="spliit"
 var_tags="finance;expense-tracking"
-var_cpu="1"
-var_ram="1024"
-var_disk="8"
+var_cpu="2"
+var_ram="3072"
+var_disk="10"
 var_os="debian"
 var_version="12"
 var_unprivileged="1"

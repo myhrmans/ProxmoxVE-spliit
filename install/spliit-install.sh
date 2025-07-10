@@ -109,6 +109,7 @@ msg_info "Database URL configured"
 # Install dependencies and build
 msg_info "Installing npm dependencies (this may take a while)..."
 cd /opt/spliit
+export NODE_OPTIONS="--max-old-space-size=2048"
 npm install
 msg_info "Building application..."
 NODE_ENV=production npm run build
