@@ -110,11 +110,11 @@ msg_info "Database URL configured"
 msg_info "Installing npm dependencies (this may take a while)..."
 cd /opt/spliit
 export NODE_OPTIONS="--max-old-space-size=2048"
-npm install
+$STD npm install
 msg_info "Building application..."
-NODE_ENV=production npm run build
+$STD NODE_ENV=production npm run build
 msg_info "Pruning development dependencies..."
-npm prune --production
+$STD npm prune --production
 msg_ok "Set up Spliit"
 
 # Creating Service

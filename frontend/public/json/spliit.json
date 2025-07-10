@@ -9,8 +9,8 @@
   "interface_port": 3000,
   "documentation": "https://github.com/spliit-app/spliit",
   "website": "https://spliit.app",
-  "logo": "https://raw.githubusercontent.com/spliit-app/spliit/main/public/logo.svg",
-  "description": "Spliit is a free and open-source alternative to Splitwise. Share expenses with friends and family, keep track of who owes whom.",
+  "logo": "",
+  "description": "Spliit is a free and open-source expense sharing application. Share expenses with friends and family, keep track of who owes whom.",
   "install_methods": [
     {
       "type": "default",
@@ -40,6 +40,10 @@
     {
       "text": "First user to register becomes the admin",
       "type": "warning"
+    },
+    {
+      "text": "Requires 3GB RAM during build due to Next.js compilation",
+      "type": "info"
     }
   ]
 }

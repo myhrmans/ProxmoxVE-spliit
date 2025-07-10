@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/myhrmans/ProxmoxVE-spliit/develop/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
-# Author: [myhrmans]
+# Author: [YourUserName]
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/spliit-app/spliit
 
@@ -67,10 +67,12 @@ function update_script() {
     fi
     
     # Install dependencies and run migrations
+    export NODE_OPTIONS="--max-old-space-size=2048"
     export NODE_ENV=production
-    npm ci --only=production &>/dev/null
+    npm install &>/dev/null
     npm run build &>/dev/null
     npx prisma migrate deploy &>/dev/null
+    npm prune --production &>/dev/null
     
     # Update version file
     echo "${RELEASE}" >/opt/${APP}_version.txt
