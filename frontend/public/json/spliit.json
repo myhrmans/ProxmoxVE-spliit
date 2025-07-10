@@ -1,0 +1,45 @@
+{
+  "name": "Spliit",
+  "slug": "spliit",
+  "categories": ["Finance", "Tools"],
+  "date_created": "2025-07-09",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "interface_port": 3000,
+  "documentation": "https://github.com/spliit-app/spliit",
+  "website": "https://spliit.app",
+  "logo": "https://raw.githubusercontent.com/spliit-app/spliit/main/public/logo.svg",
+  "description": "Spliit is a free and open-source alternative to Splitwise. Share expenses with friends and family, keep track of who owes whom.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/spliit.sh",
+      "resources": {
+        "cpu": 2,
+        "ram": 2048,
+        "hdd": 8,
+        "os": "debian",
+        "version": "12"
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": "",
+    "password": ""
+  },
+  "notes": [
+    {
+      "text": "Database credentials are saved in ~/spliit.creds",
+      "type": "info"
+    },
+    {
+      "text": "The application runs on port 3000",
+      "type": "info"
+    },
+    {
+      "text": "First user to register becomes the admin",
+      "type": "warning"
+    }
+  ]
+}
